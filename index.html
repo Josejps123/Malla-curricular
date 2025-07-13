@@ -234,11 +234,10 @@
       "EII609": ["EIQ542"],
       "EIE349": ["FIS331"],
       "DER404": ["MIN430"],
+      "EII604": ["ICA553"],
     };
 
     const asignaturas = document.querySelectorAll('.asignatura');
-
-    // Guardar progreso en localStorage
     let aprobadas = JSON.parse(localStorage.getItem('aprobadas')) || [];
 
     function actualizarEstado() {
@@ -251,6 +250,7 @@
 
         if (aprobadas.includes(sigla)) {
           asig.classList.add('aprobada');
+          asig.classList.add('desbloqueada');
         } else if (prereqs.length === 0 || puedeDesbloquear) {
           asig.classList.add('desbloqueada');
         }
@@ -260,7 +260,9 @@
     asignaturas.forEach(asig => {
       asig.addEventListener('click', () => {
         const sigla = asig.dataset.sigla;
-        if (!asig.classList.contains('desbloqueada')) return;
+        const esDesbloqueada = asig.classList.contains('desbloqueada');
+
+        if (!esDesbloqueada) return;
 
         if (aprobadas.includes(sigla)) {
           aprobadas = aprobadas.filter(s => s !== sigla);
@@ -273,17 +275,8 @@
       });
     });
 
-    // 🔄 Botón reinicio
-    document.getElementById('reset').addEventListener('click', () => {
-      if (confirm("¿Estás seguro de que quieres reiniciar tu progreso?")) {
-        localStorage.removeItem('aprobadas');
-        aprobadas = [];
-        actualizarEstado();
-      }
-    });
-
     actualizarEstado();
-</script>
+  </script>
 </body>
 </html>
 

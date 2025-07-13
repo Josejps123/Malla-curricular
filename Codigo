@@ -1,0 +1,127 @@
+const malla = [
+  {
+    semestre: 1,
+    asignaturas: [
+      { sigla: "ICR010", nombre: "Antropología Cristiana", creditos: 2, area: "Formación Fundamental", prerequisitos: [] },
+      { sigla: "MIN140", nombre: "Introducción a la Ingeniería de Minas", creditos: 6, area: "Especialidad", prerequisitos: [] },
+      { sigla: "MAT115", nombre: "Cálculo Diferencial", creditos: 6, area: "Ciencias Básicas", prerequisitos: [] },
+      { sigla: "MAT116", nombre: "Álgebra", creditos: 6, area: "Ciencias Básicas", prerequisitos: [] },
+    ],
+  },
+  {
+    semestre: 2,
+    asignaturas: [
+      { sigla: "EIQ150", nombre: "Métodos Numéricos y Programación", creditos: 6, area: "Ingeniería", prerequisitos: ["MAT116"] },
+      { sigla: "MAT117", nombre: "Cálculo Integral y Series", creditos: 6, area: "Ciencias Básicas", prerequisitos: ["MAT115"] },
+      { sigla: "FIS131", nombre: "Física General Mecánica 1", creditos: 8, area: "Ciencias Básicas", prerequisitos: ["MAT115"] },
+      { sigla: "ICR020", nombre: "Ética Cristiana", creditos: 2, area: "Formación Fundamental", prerequisitos: ["ICR010"] },
+      { sigla: "QUI222", nombre: "Química General e Inorgánica", creditos: 12, area: "Ciencias Básicas", prerequisitos: [] },
+    ],
+  },
+  {
+    semestre: 3,
+    asignaturas: [
+      { sigla: "EIQ250", nombre: "Dibujo de Ingeniería", creditos: 6, area: "Ingeniería", prerequisitos: [] },
+      { sigla: "MAT215", nombre: "Cálculo en Varias Variables", creditos: 10, area: "Ciencias Básicas", prerequisitos: ["MAT117"] },
+      { sigla: "LCL227", nombre: "Expresión Oral y Escrita", creditos: 2, area: "Formación Fundamental", prerequisitos: [] },
+      { sigla: "FIS231", nombre: "Física General Mecánica 2", creditos: 6, area: "Ciencias Básicas", prerequisitos: ["FIS131"] },
+      { sigla: "QUI220", nombre: "Química Analítica", creditos: 10, area: "Ciencias Básicas", prerequisitos: ["QUI222"] },
+      { sigla: "FormaciónFund1", nombre: "Formación Fundamental 1", creditos: 2, area: "Formación Fundamental", prerequisitos: [] },
+    ],
+  },
+  {
+    semestre: 4,
+    asignaturas: [
+      { sigla: "EIQ242", nombre: "Elementos de Físico Química", creditos: 6, area: "Ingeniería", prerequisitos: ["QUI220"] },
+      { sigla: "MAT217", nombre: "Ecuaciones Diferenciales", creditos: 10, area: "Ciencias Básicas", prerequisitos: ["MAT215"] },
+      { sigla: "EST224", nombre: "Probabilidad e Inferencia Estadística", creditos: 6, area: "Ciencias Básicas", prerequisitos: ["MAT215"] },
+      { sigla: "FIS331", nombre: "Física General Electro Magnetismo", creditos: 6, area: "Ciencias Básicas", prerequisitos: ["FIS231"] },
+      { sigla: "MIN310", nombre: "Topografía Minera", creditos: 6, area: "Especialidad", prerequisitos: [] },
+    ],
+  },
+  {
+    semestre: 5,
+    asignaturas: [
+      { sigla: "MIN320", nombre: "Geología Minera", creditos: 4, area: "Especialidad", prerequisitos: [] },
+      { sigla: "MIN330", nombre: "Operaciones y Procesos en Minería", creditos: 4, area: "Especialidad", prerequisitos: ["MIN140"] },
+      { sigla: "EIQ342", nombre: "Termodinámica General", creditos: 6, area: "Ingeniería", prerequisitos: ["EIQ242"] },
+      { sigla: "EIE349", nombre: "Sistema de Potencia en Instalaciones Mineras", creditos: 6, area: "Ingeniería", prerequisitos: [] },
+      { sigla: "ING9001", nombre: "Inglés 1", creditos: 4, area: "Formación Fundamental", prerequisitos: [] },
+    ],
+  },
+  {
+    semestre: 6,
+    asignaturas: [
+      { sigla: "MIN360", nombre: "Petrología", creditos: 8, area: "Especialidad", prerequisitos: ["MIN320"] },
+      { sigla: "MIN388", nombre: "Procesamiento de Minerales", creditos: 6, area: "Especialidad", prerequisitos: ["MIN330"] },
+      { sigla: "EIQ356", nombre: "Mecánica de Fluidos", creditos: 6, area: "Ingeniería", prerequisitos: ["MAT217"] },
+      { sigla: "MIN375", nombre: "Resistencia de Materiales", creditos: 6, area: "Especialidad", prerequisitos: ["MAT217"] },
+      { sigla: "MIN380", nombre: "Perforación y Tronadura", creditos: 6, area: "Especialidad", prerequisitos: ["MIN330"] },
+      { sigla: "ING9002", nombre: "Inglés 2", creditos: 4, area: "Formación Fundamental", prerequisitos: ["ING9001"] },
+    ],
+  },
+  {
+    semestre: 7,
+    asignaturas: [
+      { sigla: "MIN410", nombre: "Mecánica de Rocas", creditos: 6, area: "Especialidad", prerequisitos: ["MIN375"] },
+      { sigla: "MIN420", nombre: "Geología Económica", creditos: 8, area: "Especialidad", prerequisitos: ["MIN320"] },
+      { sigla: "MIN430", nombre: "Seguridad Minera", creditos: 2, area: "Especialidad", prerequisitos: [] },
+      { sigla: "MIN444", nombre: "Carguío y Transporte", creditos: 6, area: "Especialidad", prerequisitos: ["MIN380"] },
+      { sigla: "ICA533", nombre: "Análisis Económico", creditos: 6, area: "Ingeniería", prerequisitos: [] },
+      { sigla: "MIN440", nombre: "Ventilación", creditos: 6, area: "Especialidad", prerequisitos: [] },
+      { sigla: "ING9003", nombre: "Inglés 3", creditos: 4, area: "Formación Fundamental", prerequisitos: ["ING9002"] },
+    ],
+  },
+  {
+    semestre: 8,
+    asignaturas: [
+      { sigla: "MIN460", nombre: "Métodos de Explotación Minera", creditos: 6, area: "Especialidad", prerequisitos: ["MIN410"] },
+      { sigla: "MIN470", nombre: "Evaluación de Recursos y Reservas", creditos: 6, area: "Especialidad", prerequisitos: ["MIN388"] },
+      { sigla: "MIN480", nombre: "Gestión Ambiental Minera", creditos: 4, area: "Especialidad", prerequisitos: [] },
+      { sigla: "MIN485", nombre: "Cálculo de Procesos Mineros y Metalúrgicos", creditos: 6, area: "Especialidad", prerequisitos: ["MIN388"] },
+      { sigla: "EIQ542", nombre: "Computación Aplicada", creditos: 6, area: "Ingeniería", prerequisitos: ["EIQ150"] },
+      { sigla: "ING9004", nombre: "Inglés 4", creditos: 4, area: "Formación Fundamental", prerequisitos: ["ING9003"] },
+    ],
+  },
+  {
+    semestre: 9,
+    asignaturas: [
+      { sigla: "MIN510", nombre: "Diseño de Minas a Cielo Abierto", creditos: 6, area: "Especialidad", prerequisitos: ["MIN460"] },
+      { sigla: "MINOpt1", nombre: "Optativo 1", creditos: 4, area: "Especialidad", prerequisitos: [] },
+      { sigla: "DER404", nombre: "Legislación Laboral", creditos: 2, area: "Gestión", prerequisitos: [] },
+      { sigla: "MIN520", nombre: "Derecho Minero", creditos: 2, area: "Gestión", prerequisitos: [] },
+      { sigla: "MIN540", nombre: "Laboratorio de Procesamiento de Minerales", creditos: 4, area: "Especialidad", prerequisitos: ["MIN388"] },
+      { sigla: "EII604", nombre: "Administración y Organización", creditos: 6, area: "Gestión", prerequisitos: [] },
+      { sigla: "EIQ571", nombre: "Recursos Minerales, Minería y Mercado", creditos: 4, area: "Ingeniería", prerequisitos: [] },
+      { sigla: "FormaciónFund2", nombre: "Formación Fundamental 2", creditos: 2, area: "Formación Fundamental", prerequisitos: [] },
+    ],
+  },
+  {
+    semestre: 10,
+    asignaturas: [
+      { sigla: "MIN560", nombre: "Diseño de Minas Subterráneas", creditos: 6, area: "Especialidad", prerequisitos: ["MIN460"] },
+      { sigla: "MIN590", nombre: "Proyecto 1", creditos: 4, area: "Integradoras", prerequisitos: ["MIN510"] },
+      { sigla: "MIN570", nombre: "Sostenibilidad Minera", creditos: 4, area: "Especialidad", prerequisitos: [] },
+      { sigla: "EIQ657", nombre: "Ingeniería Económica", creditos: 4, area: "Ingeniería", prerequisitos: ["ICA533"] },
+      { sigla: "EII609", nombre: "Investigación de Operaciones", creditos: 4, area: "Ingeniería", prerequisitos: [] },
+      { sigla: "MINOpt2", nombre: "Optativo 2", creditos: 4, area: "Especialidad", prerequisitos: [] },
+      { sigla: "FormaciónFund3", nombre: "Formación Fundamental 3", creditos: 2, area: "Formación Fundamental", prerequisitos: [] },
+    ],
+  },
+  {
+    semestre: 11,
+    asignaturas: [
+      { sigla: "MIN640", nombre: "Proyecto 2", creditos: 8, area: "Integradoras", prerequisitos: ["MIN590"] },
+      { sigla: "MIN620", nombre: "Gestión de Proyectos Mineros", creditos: 4, area: "Gestión", prerequisitos: ["EII604"] },
+      { sigla: "MIN630", nombre: "Diseño y Evaluación de Proyectos Mineros", creditos: 4, area: "Gestión", prerequisitos: ["EIQ657"] },
+      { sigla: "MINOpt3", nombre: "Optativo 3", creditos: 4, area: "Especialidad", prerequisitos: [] },
+    ],
+  },
+  {
+    semestre: 12,
+    asignaturas: [
+      { sigla: "MIN680", nombre: "Proyecto de Título", creditos: 12, area: "Integradoras", prerequisitos: ["MIN640"] },
+      { sigla: "MINOpt4", nombre: "Optativo 4", creditos: 4, area: "Especialidad", prerequisitos: [] },
+    ],
+  }
+];

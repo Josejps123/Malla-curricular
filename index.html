@@ -61,6 +61,7 @@
 </head>
 <body>
   <h1>Malla Curricular Ingeniería Civil de Minas</h1>
+  <button id="reset">Reiniciar progreso</button>
   <div class="malla">
     
     <!-- SEMESTRE 1 -->
@@ -272,8 +273,17 @@
       });
     });
 
+    // 🔄 Botón reinicio
+    document.getElementById('reset').addEventListener('click', () => {
+      if (confirm("¿Estás seguro de que quieres reiniciar tu progreso?")) {
+        localStorage.removeItem('aprobadas');
+        aprobadas = [];
+        actualizarEstado();
+      }
+    });
+
     actualizarEstado();
-  </script>
+</script>
 </body>
 </html>
 

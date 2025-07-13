@@ -183,80 +183,71 @@
       <h2>Semestre 12</h2>
       <div class="asignatura" data-sigla="MIN680">Proyecto de Título <div class="creditos">12 créditos</div></div>
       <div class="asignatura" data-sigla="OPT4">Optativo 4 <div class="creditos">3 créditos</div></div>
-<script>
-  // Lista completa de prerrequisitos (extraída del PDF)
-  const prerrequisitos = {
-    // Matemáticas y Ciencias Básicas
-    "MAT117": ["MAT115"],
-    "MAT215": ["MAT117"],
-    "MAT217": ["MAT215"],
-    "EST224": ["MAT215"],
-    "FIS231": ["FIS131"],
-    "FIS331": ["FIS231"],
-    "EIQ150": ["MIN140"],
-    "EIQ356": ["EIQ324"],
-    "EIQ242": ["EIQ1450"],
-    "QUI220": ["QUI222"],
-    "EIQ250": ["MIN140"],
-    
-    // Formación minera y de ingeniería
-    "MIN320": ["QUI220"],
-    "MIN360": ["MIN320"],
-    "MIN375": ["FIS231"],
-    "MIN380": ["EIE349"],
-    "MIN388": ["MIN330"],
-    "MIN410": ["MIN360"],
-    "MIN420": ["MIN320"],
-    "MIN430": ["MIN330"],
-    "MIN444": ["MIN330"],
-    "MIN440": ["EIQ356"],
-    "MIN460": ["MIN410", "MIN380"],
-    "MIN470": ["MIN420"],
-    "MIN480": ["MIN330"],
-    "MIN485": ["MIN388"],
-    "MIN510": ["MIN460"],
-    "MIN520": ["MIN430"],
-    "MIN540": ["MIN485"],
-    "MIN560": ["MIN460"],
-    "MIN570": ["MIN480"],
-    "MIN620": ["EII604"],
-    "MIN630": ["EIQ657", "EII609"],
-    "MIN640": ["MIN590"],
-    "MIN680": ["MIN640"],
+  <script>
+    // Lista completa de prerrequisitos (extraída del PDF)
+    const prerrequisitos = {
+      "MAT117": ["MAT115"],
+      "MAT215": ["MAT117"],
+      "MAT217": ["MAT215"],
+      "EST224": ["MAT215"],
+      "FIS231": ["FIS131"],
+      "FIS331": ["FIS231"],
+      "EIQ150": ["MIN140"],
+      "EIQ356": ["EIQ324"],
+      "EIQ242": ["EIQ1450"],
+      "QUI220": ["QUI222"],
+      "EIQ250": ["MIN140"],
+      "MIN320": ["QUI220"],
+      "MIN360": ["MIN320"],
+      "MIN375": ["FIS231"],
+      "MIN380": ["EIE349"],
+      "MIN388": ["MIN330"],
+      "MIN410": ["MIN360"],
+      "MIN420": ["MIN320"],
+      "MIN430": ["MIN330"],
+      "MIN444": ["MIN330"],
+      "MIN440": ["EIQ356"],
+      "MIN460": ["MIN410", "MIN380"],
+      "MIN470": ["MIN420"],
+      "MIN480": ["MIN330"],
+      "MIN485": ["MIN388"],
+      "MIN510": ["MIN460"],
+      "MIN520": ["MIN430"],
+      "MIN540": ["MIN485"],
+      "MIN560": ["MIN460"],
+      "MIN570": ["MIN480"],
+      "MIN620": ["EII604"],
+      "MIN630": ["EIQ657", "EII609"],
+      "MIN640": ["MIN590"],
+      "MIN680": ["MIN640"],
+      "ING9002": ["ING9001"],
+      "ING9003": ["ING9002"],
+      "ING9004": ["ING9003"],
+      "EIQ657": ["EII604"],
+      "EIQ542": ["MIN440"],
+      "EII609": ["EIQ542"],
+      "EIE349": ["FIS331"],
+      "DER404": ["MIN430"],
+    };
+    const asignaturas = document.querySelectorAll('.asignatura');
 
-    // Inglés secuencial
-    "ING9002": ["ING9001"],
-    "ING9003": ["ING9002"],
-    "ING9004": ["ING9003"],
+    function limpiarResaltados() {
+      asignaturas.forEach(asig => asig.classList.remove('prerreq'));
+    }
+  
+    asignaturas.forEach(asig => {
+      asig.addEventListener('click', () => {
+        limpiarResaltados();
+        const sigla = asig.dataset.sigla;
+        const prereqs = prerrequisitos[sigla] || [];
 
-    // Otros
-    "EIQ657": ["EII604"],
-    "EIQ542": ["MIN440"],
-    "EII609": ["EIQ542"],
-    "EIE349": ["FIS331"],
-    "DER404": ["MIN430"],
-  };
-
-  const asignaturas = document.querySelectorAll('.asignatura');
-
-  function limpiarResaltados() {
-    asignaturas.forEach(asig => asig.classList.remove('prerreq'));
-  }
-
-  asignaturas.forEach(asig => {
-    asig.addEventListener('click', () => {
-      limpiarResaltados();
-      const sigla = asig.dataset.sigla;
-      const prereqs = prerrequisitos[sigla] || [];
-
-      prereqs.forEach(req => {
-        const target = document.querySelector(`.asignatura[data-sigla="${req}"]`);
-        if (target) target.classList.add('prerreq');
+        prereqs.forEach(req => {
+          const target = document.querySelector(`.asignatura[data-sigla="${req}"]`);
+          if (target) target.classList.add('prerreq');
+        });
       });
     });
-  });
-</script>
-  </div>
+  </script>
 </body>
 </html>
 

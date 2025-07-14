@@ -39,6 +39,8 @@
       transition: all 0.3s;
       opacity: 0.4;
       pointer-events: none;
+      .asignatura.no-click {
+      pointer-events: none;
     }
     .asignatura.desbloqueada {
       opacity: 1;
@@ -274,7 +276,7 @@
         const tieneRequisitos = prereqs.length > 0 || requiereCreditos > 0;
         const puedeDesbloquear = (!tieneRequisitos) || (tienePrerrequisitosAprobados && cumpleCreditos);
 
-        asig.classList.remove('aprobada', 'desbloqueada');
+         asig.classList.remove('aprobada', 'desbloqueada', 'no-click');
 
         if (aprobadas.includes(sigla)) {
           asig.classList.add('aprobada', 'desbloqueada');
@@ -293,7 +295,7 @@
           if (requiereCreditos > 0 && totalCreditos < requiereCreditos) {
             tooltip += `Requiere ${requiereCreditos} créditos aprobados.`;
           }
-          asig.setAttribute('title', tooltip);
+          asig.classList.add('no-click');
         }
       });
     }

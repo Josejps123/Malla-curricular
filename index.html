@@ -191,6 +191,7 @@
 </div> <!-- cierre de .semestre 12 -->
 </div> <!-- cierre de .malla -->
   </div>
+  </div>
 
   <script>
     const prerrequisitos = {
@@ -266,18 +267,17 @@
         const sigla = asig.dataset.sigla;
         const prereqs = prerrequisitos[sigla] || [];
         const requiereCreditos = creditosNecesarios[sigla] || 0;
-        const puedeDesbloquear = prereqs.every(pr => aprobadas.includes(pr)) && totalCreditos >= requiereCreditos;
+
+        const tienePrerrequisitosAprobados = prereqs.every(pr => aprobadas.includes(pr));
+        const cumpleCreditos = totalCreditos >= requiereCreditos;
+
+        const puedeDesbloquear = tienePrerrequisitosAprobados && cumpleCreditos;
 
         asig.classList.remove('aprobada', 'desbloqueada');
 
         if (aprobadas.includes(sigla)) {
-          asig.classList.add('aprobada');
-          asig.classList.add('desbloqueada');
-        } else if (prereqs.length === 0 && requiereCreditos === 0) {
-          asig.classList.add('desbloqueada');
+          asig.classList.add('aprobada', 'desbloqueada');
         } else if (puedeDesbloquear) {
-          asig.classList.add('desbloqueada');
-}
           asig.classList.add('desbloqueada');
         }
       });
@@ -313,4 +313,5 @@
   </script>
 </body>
 </html>
+
 

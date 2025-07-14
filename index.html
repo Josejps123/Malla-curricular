@@ -38,8 +38,8 @@
       background-color: #e9f1f7;
       transition: all 0.3s;
       opacity: 0.4;
-      pointer-events: none;
-      .asignatura.no-click {
+    }
+    .asignatura.no-click {
       pointer-events: none;
     }
     .asignatura.desbloqueada {
@@ -62,7 +62,7 @@
   </style>
 </head>
 <body>
-  <h1>Malla Curricular Ingeniería Civil de Minas</h1>
+   <h1>Malla Curricular Ingeniería Civil de Minas</h1>
   <p id="creditos-totales">Créditos aprobados: 0</p>
   <button id="reset">Reiniciar progreso</button>
   <div class="malla">
@@ -276,7 +276,7 @@
         const tieneRequisitos = prereqs.length > 0 || requiereCreditos > 0;
         const puedeDesbloquear = (!tieneRequisitos) || (tienePrerrequisitosAprobados && cumpleCreditos);
 
-         asig.classList.remove('aprobada', 'desbloqueada', 'no-click');
+        asig.classList.remove('aprobada', 'desbloqueada', 'no-click');
 
         if (aprobadas.includes(sigla)) {
           asig.classList.add('aprobada', 'desbloqueada');
@@ -295,6 +295,7 @@
           if (requiereCreditos > 0 && totalCreditos < requiereCreditos) {
             tooltip += `Requiere ${requiereCreditos} créditos aprobados.`;
           }
+          asig.setAttribute('title', tooltip);
           asig.classList.add('no-click');
         }
       });
@@ -330,7 +331,4 @@
   </script>
 </body>
 </html>
-
-</html>
-
 

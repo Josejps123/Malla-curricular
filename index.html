@@ -287,7 +287,14 @@ asignaturas.forEach(asig => {
 document.getElementById('creditos-totales').textContent = `Créditos aprobados: ${totalCreditos}`;
       });
     });
-
+  // 🔄 Botón reinicio
+    document.getElementById('reset').addEventListener('click', () => {
+      if (confirm("¿Estás seguro de que quieres reiniciar tu progreso?")) {
+        localStorage.removeItem('aprobadas');
+        aprobadas = [];
+        actualizarEstado();
+      }
+    });
     actualizarEstado();
   </script>
 </body>

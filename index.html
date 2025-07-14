@@ -240,7 +240,7 @@
       "EII604": ["ICA533"],
     };
 
-   const asignaturas = document.querySelectorAll('.asignatura');
+    const asignaturas = document.querySelectorAll('.asignatura');
     let aprobadas = JSON.parse(localStorage.getItem('aprobadas')) || [];
 
     function actualizarEstado() {
@@ -258,6 +258,18 @@
           asig.classList.add('desbloqueada');
         }
       });
+
+      // contador de créditos
+      let totalCreditos = 0;
+      asignaturas.forEach(asig => {
+        const sigla = asig.dataset.sigla;
+        if (aprobadas.includes(sigla)) {
+          const creditosText = asig.querySelector('.creditos')?.textContent || '';
+          const match = creditosText.match(/(\d+)/);
+          if (match) totalCreditos += parseInt(match[1]);
+        }
+      });
+      document.getElementById('creditos-totales').textContent = `Créditos aprobados: ${totalCreditos}`;
     }
 
     asignaturas.forEach(asig => {
@@ -275,19 +287,9 @@
 
         localStorage.setItem('aprobadas', JSON.stringify(aprobadas));
         actualizarEstado();
-      let totalCreditos = 0;
-asignaturas.forEach(asig => {
-  const sigla = asig.dataset.sigla;
-  if (aprobadas.includes(sigla)) {
-    const creditosText = asig.querySelector('.creditos')?.textContent || '';
-    const match = creditosText.match(/(\d+)/);
-    if (match) totalCreditos += parseInt(match[1]);
-  }
-});
-document.getElementById('creditos-totales').textContent = `Créditos aprobados: ${totalCreditos}`;
       });
     });
-  // 🔄 Botón reinicio
+
     document.getElementById('reset').addEventListener('click', () => {
       if (confirm("¿Estás seguro de que quieres reiniciar tu progreso?")) {
         localStorage.removeItem('aprobadas');
@@ -295,9 +297,9 @@ document.getElementById('creditos-totales').textContent = `Créditos aprobados: 
         actualizarEstado();
       }
     });
+
     actualizarEstado();
   </script>
 </body>
 </html>
-
 

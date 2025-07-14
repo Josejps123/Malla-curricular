@@ -188,6 +188,7 @@
       <h2>Semestre 12</h2>
       <div class="asignatura" data-sigla="MIN680">Proyecto de Título <div class="creditos">12 créditos</div></div>
       <div class="asignatura" data-sigla="OPT4">Optativo 4 <div class="creditos">3 créditos</div></div>
+      <div class="asignatura" data-sigla="PRM106">Practica Profesional <divc class="creditos">6 créditos</div></div>
 </div> <!-- cierre de .semestre 12 -->
 </div> <!-- cierre de .malla -->
   </div>
@@ -247,7 +248,7 @@
       "MIN590": 170
     };
 
-    const asignaturas = document.querySelectorAll('.asignatura');
+       const asignaturas = document.querySelectorAll('.asignatura');
     let aprobadas = JSON.parse(localStorage.getItem('aprobadas')) || [];
 
     function actualizarEstado() {
@@ -272,15 +273,28 @@
         const cumpleCreditos = totalCreditos >= requiereCreditos;
 
         const tieneRequisitos = prereqs.length > 0 || requiereCreditos > 0;
-
         const puedeDesbloquear = (!tieneRequisitos) || (tienePrerrequisitosAprobados && cumpleCreditos);
 
         asig.classList.remove('aprobada', 'desbloqueada');
 
         if (aprobadas.includes(sigla)) {
           asig.classList.add('aprobada', 'desbloqueada');
+          asig.removeAttribute('title');
         } else if (puedeDesbloquear) {
           asig.classList.add('desbloqueada');
+          asig.removeAttribute('title');
+        } else {
+          let tooltip = '';
+          if (prereqs.length > 0) {
+            const faltantes = prereqs.filter(p => !aprobadas.includes(p));
+            if (faltantes.length > 0) {
+              tooltip += `Faltan prerrequisitos: ${faltantes.join(', ')}. `;
+            }
+          }
+          if (requiereCreditos > 0 && totalCreditos < requiereCreditos) {
+            tooltip += `Requiere ${requiereCreditos} créditos aprobados.`;
+          }
+          asig.setAttribute('title', tooltip);
         }
       });
     }

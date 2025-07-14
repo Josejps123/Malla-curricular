@@ -271,7 +271,9 @@
         const tienePrerrequisitosAprobados = prereqs.every(pr => aprobadas.includes(pr));
         const cumpleCreditos = totalCreditos >= requiereCreditos;
 
-        const puedeDesbloquear = tienePrerrequisitosAprobados && cumpleCreditos;
+        const tieneRequisitos = prereqs.length > 0 || requiereCreditos > 0;
+
+        const puedeDesbloquear = (!tieneRequisitos) || (tienePrerrequisitosAprobados && cumpleCreditos);
 
         asig.classList.remove('aprobada', 'desbloqueada');
 

@@ -273,7 +273,11 @@
         if (aprobadas.includes(sigla)) {
           asig.classList.add('aprobada');
           asig.classList.add('desbloqueada');
-        } else if ((prereqs.length === 0 || puedeDesbloquear)) {
+        } else if (prereqs.length === 0 && requiereCreditos === 0) {
+          asig.classList.add('desbloqueada');
+        } else if (puedeDesbloquear) {
+          asig.classList.add('desbloqueada');
+}
           asig.classList.add('desbloqueada');
         }
       });

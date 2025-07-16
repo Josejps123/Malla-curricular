@@ -53,20 +53,28 @@
     .creditos {
       font-size: 12px;
       color: #555;
-   .estado-circulo {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      border: 2px solid #005b96;
-      border-radius: 50%;
-      margin-right: 6px;
-      vertical-align: middle;
-      background-color: transparent;
-      transition: background-color 0.3s, border-color 0.3s;
     }
-    .asignatura.aprobada .estado-circulo {
-      background-color: #2e8b57;
-      border-color: #2e8b57;
+    .estado-circulo {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #005b96;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+    background-color: transparent;
+    transition: background-color 0.3s, color 0.3s;
+    text-align: center;
+    line-height: 14px;
+    font-size: 12px;
+    font-weight: bold;
+    color: transparent;
+  }
+
+  .asignatura.aprobada .estado-circulo {
+    background-color: #2e8b57;
+    color: white;
+    border-color: #2e8b57;
     }
     @media (max-width: 900px) {
       .malla {
@@ -264,92 +272,65 @@
       "MIN590": 170
     };
 
-    const asignaturas = document.querySelectorAll('.asignatura');
-    let aprobadas = JSON.parse(localStorage.getItem('aprobadas')) || [];
+   function actualizarEstado() {
+  let totalCreditos = 0;
 
-    // Agregar el círculo visual al inicio de cada asignatura
-    asignaturas.forEach(asig => {
-      if (!asig.querySelector('.estado-circulo')) {
-        const circulo = document.createElement('span');
-        circulo.classList.add('estado-circulo');
-        asig.insertBefore(circulo, asig.firstChild);
-      }
-    });
-
-    function actualizarEstado() {
-      let totalCreditos = 0;
-
-      asignaturas.forEach(asig => {
-        const sigla = asig.dataset.sigla;
-        if (aprobadas.includes(sigla)) {
-          const creditosText = asig.querySelector('.creditos')?.textContent || '';
-          const match = creditosText.match(/(\d+)/);
-          if (match) totalCreditos += parseInt(match[1]);
-        }
-      });
-      document.getElementById('creditos-totales').textContent = `Créditos aprobados: ${totalCreditos}`;
-
-      asignaturas.forEach(asig => {
-        const sigla = asig.dataset.sigla;
-        const prereqs = prerrequisitos[sigla] || [];
-        const requiereCreditos = creditosNecesarios[sigla] || 0;
-
-        const tienePrerrequisitosAprobados = prereqs.every(pr => aprobadas.includes(pr));
-        const cumpleCreditos = totalCreditos >= requiereCreditos;
-
-        const tieneRequisitos = prereqs.length > 0 || requiereCreditos > 0;
-        const puedeDesbloquear = (!tieneRequisitos) || (tienePrerrequisitosAprobados && cumpleCreditos);
-
-        asig.classList.remove('aprobada', 'desbloqueada', 'no-click');
-
-        if (aprobadas.includes(sigla)) {
-          asig.classList.add('aprobada', 'desbloqueada');
-          asig.removeAttribute('title');
-        } else if (puedeDesbloquear) {
-          asig.classList.add('desbloqueada');
-          asig.removeAttribute('title');
-        } else {
-          let tooltip = '';
-          if (prereqs.length > 0) {
-            const faltantes = prereqs.filter(p => !aprobadas.includes(p));
-            if (faltantes.length > 0) {
-              tooltip += `Faltan prerrequisitos: ${faltantes.join(', ')}. `;
-            }
-          }
-          if (requiereCreditos > 0 && totalCreditos < requiereCreditos) {
-            tooltip += `Requiere ${requiereCreditos} créditos aprobados.`;
-          }
-          asig.setAttribute('title', tooltip);
-          asig.classList.add('no-click');
-        }
-      });
+  asignaturas.forEach(asig => {
+    const sigla = asig.dataset.sigla;
+    if (!asig.querySelector('.estado-circulo')) {
+      const circulo = document.createElement('span');
+      circulo.classList.add('estado-circulo');
+      asig.insertBefore(circulo, asig.firstChild);
     }
 
-    asignaturas.forEach(asig => {
-      asig.addEventListener('click', () => {
-        const sigla = asig.dataset.sigla;
-        const esDesbloqueada = asig.classList.contains('desbloqueada');
+    if (aprobadas.includes(sigla)) {
+      const creditosText = asig.querySelector('.creditos')?.textContent || '';
+      const match = creditosText.match(/(\d+)/);
+      if (match) totalCreditos += parseInt(match[1]);
+    }
+  });
 
-        if (!esDesbloqueada) return;
+  document.getElementById('creditos-totales').textContent = `Créditos aprobados: ${totalCreditos}`;
 
-        if (aprobadas.includes(sigla)) {
-          aprobadas = aprobadas.filter(s => s !== sigla);
-        } else {
-          aprobadas.push(sigla);
+  asignaturas.forEach(asig => {
+    const sigla = asig.dataset.sigla;
+    const prereqs = prerrequisitos[sigla] || [];
+    const requiereCreditos = creditosNecesarios[sigla] || 0;
+
+    const tienePrerrequisitosAprobados = prereqs.every(pr => aprobadas.includes(pr));
+    const cumpleCreditos = totalCreditos >= requiereCreditos;
+
+    const tieneRequisitos = prereqs.length > 0 || requiereCreditos > 0;
+    const puedeDesbloquear = (!tieneRequisitos) || (tienePrerrequisitosAprobados && cumpleCreditos);
+
+    asig.classList.remove('aprobada', 'desbloqueada', 'no-click');
+
+    const circulo = asig.querySelector('.estado-circulo');
+    if (aprobadas.includes(sigla)) {
+      asig.classList.add('aprobada', 'desbloqueada');
+      circulo.textContent = '✔';
+      asig.removeAttribute('title');
+    } else if (puedeDesbloquear) {
+      asig.classList.add('desbloqueada');
+      circulo.textContent = '';
+      asig.removeAttribute('title');
+    } else {
+      let tooltip = '';
+      if (prereqs.length > 0) {
+        const faltantes = prereqs.filter(p => !aprobadas.includes(p));
+        if (faltantes.length > 0) {
+          tooltip += `Faltan prerrequisitos: ${faltantes.join(', ')}. `;
         }
-
-        localStorage.setItem('aprobadas', JSON.stringify(aprobadas));
-        actualizarEstado();
-      });
-    });
-
-    document.getElementById('reset').addEventListener('click', () => {
-      if (confirm("¿Estás seguro de que quieres reiniciar tu progreso?")) {
-        localStorage.removeItem('aprobadas');
-        aprobadas = [];
-        actualizarEstado();
       }
-    });
+      if (requiereCreditos > 0 && totalCreditos < requiereCreditos) {
+        tooltip += `Requiere ${requiereCreditos} créditos aprobados.`;
+      }
+      asig.setAttribute('title', tooltip);
+      asig.classList.add('no-click');
+      circulo.textContent = '';
+    }
+  });
+}
 
     actualizarEstado();
   </script>

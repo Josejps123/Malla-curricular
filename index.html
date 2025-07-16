@@ -3,94 +3,124 @@
 <head>
   <meta charset="UTF-8" />
   <title>Malla Ingeniería Civil de Minas</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
-      margin: 0;
-      padding: 20px;
+ <style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    color: #2e3a59;
+  }
+
+  .malla {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+  }
+
+  .semestre {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  }
+
+  .semestre h2 {
+    font-size: 16px;
+    margin-top: 0;
+    color: #005b96;
+  }
+
+  .asignatura {
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    border-left: 5px solid #333;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    transition: all 0.3s;
+    opacity: 0.4;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Colores según área disciplinar */
+  .ciencias-basicas {
+    background-color: #0071bc;
+    color: white;
+  }
+  .ingenieria {
+    background-color: #00b0f0;
+    color: white;
+  }
+  .especialidad {
+    background-color: #ffc000;
+  }
+  .gestion {
+    background-color: #00b050;
+    color: white;
+  }
+  .integradoras {
+    background-color: #ed1c24;
+    color: white;
+  }
+  .fundamental {
+    background-color: #92278f;
+    color: white;
+  }
+
+  .asignatura.no-click {
+    pointer-events: none;
+    cursor: default;
+  }
+  .asignatura.desbloqueada {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .asignatura.aprobada {
+    border-left-color: #2e8b57 !important;
+    opacity: 1;
+  }
+
+  .creditos {
+    font-size: 12px;
+    color: #fff;
+    margin-left: 8px;
+  }
+
+  .estado-circulo {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    margin-left: 8px;
+  }
+
+  .asignatura.aprobada .estado-circulo {
+    background-color: #2e8b57;
+    color: white;
+    border-color: #2e8b57;
+    content: "✔";
+  }
+
+  @media (max-width: 900px) {
+    .malla {
+      grid-template-columns: repeat(2, 1fr);
     }
-    h1 {
-      text-align: center;
-      color: #2e3a59;
-    }
-     .malla {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 10px;
-    }
-    .semestre {
-      background-color: #ffffff;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 10px;
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-    }
-    .semestre h2 {
-      font-size: 16px;
-      margin-top: 0;
-      color: #005b96;
-    }
-    .asignatura {
-      margin-bottom: 5px;
-      padding: 5px 5px 5px 24px;
-      border-left: 4px solid #005b96;
-      background-color: #e9f1f7;
-      transition: all 0.3s;
-      opacity: 0.4;
-      position: relative;
-      cursor: pointer;
-      user-select: none;
-    }
-    .asignatura.no-click {
-      pointer-events: none;
-      cursor: default;
-    }
-    .asignatura.desbloqueada {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .asignatura.aprobada {
-      background-color: #b6e2b6 !important;
-      border-left-color: #2e8b57 !important;
-      opacity: 1;
-    }
-    .creditos {
-      font-size: 12px;
-      color: #555;
-    }
-    .estado-circulo {
-      position: absolute;
-      right: 6px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 14px;
-      height: 14px;
-      border: 2px solid #005b96;
-      border-radius: 50%;
-      background-color: transparent;
-      transition: background-color 0.3s, border-color 0.3s;
-    }
-    .asignatura.aprobada .estado-circulo {
-      background-color: #2e8b57;
-      border-color: #2e8b57;
-    }
-    .asignatura.aprobada .estado-circulo::after {
-      content: "✔";
-      color: white;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -60%);
-      font-size: 12px;
-      font-weight: bold;
-    }
-    @media (max-width: 900px) {
-      .malla {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
   <h1>Malla Curricular Ingeniería Civil de Minas</h1>

@@ -82,11 +82,10 @@
   </style>
 </head>
 <body>
-   <h1>Malla Curricular Ingeniería Civil de Minas</h1>
+  <h1>Malla Curricular Ingeniería Civil de Minas</h1>
   <p id="creditos-totales">Créditos aprobados: 0</p>
   <button id="reset">Reiniciar progreso</button>
-  <div class="malla">
-       <!-- SEMESTRE 1 -->
+   <!-- SEMESTRE 1 -->
     <div class="semestre">
       <h2>Semestre 1</h2>
       <div class="asignatura" data-sigla="ICR010">Antropología Cristiana <div class="creditos">2 créditos</div></div>
@@ -262,16 +261,12 @@
       "DER404": ["MIN430"],
       "EII604": ["ICA533"]
     };
-
     const creditosNecesarios = {
       "ING9001": 19,
       "MIN310": 55,
       "ICA533": 90,
       "MIN590": 170
     };
-
-    const prerrequisitos = {/* ... */}; // tu objeto actual
-    const creditosNecesarios = {/* ... */}; // tu objeto actual
 
     const asignaturas = document.querySelectorAll('.asignatura');
     let aprobadas = JSON.parse(localStorage.getItem('aprobadas')) || [];

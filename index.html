@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Malla Ingeniería Civil de Minas</title>
   <style>
     body {
@@ -14,7 +14,7 @@
       text-align: center;
       color: #2e3a59;
     }
-     .malla {
+    .malla {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       gap: 10px;
@@ -33,58 +33,25 @@
     }
     .asignatura {
       margin-bottom: 5px;
-      padding: 5px 5px 5px 24px;
+      padding: 8px 5px;
       border-left: 4px solid #005b96;
+      border-radius: 4px;
       background-color: #e9f1f7;
-      transition: all 0.3s;
-      opacity: 0.4;
+      color: #000;
       position: relative;
-      cursor: pointer;
-      user-select: none;
     }
-    .asignatura.no-click {
-      pointer-events: none;
-      cursor: default;
-    }
-    .asignatura.desbloqueada {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .asignatura.aprobada {
-      background-color: #b6e2b6 !important;
-      border-left-color: #2e8b57 !important;
-      opacity: 1;
-    }
+    .ciencias-basicas { background-color: #0074cc; color: white; }
+    .ingenieria { background-color: #00b050; color: white; }
+    .especialidad { background-color: #f39c12; color: white; }
+    .gestion { background-color: #27ae60; color: white; }
+    .formacion-fundamental { background-color: #8e44ad; color: white; }
+    .integradoras { background-color: #e74c3c; color: white; }
+
     .creditos {
       font-size: 12px;
-      color: #555;
+      color: #fff;
     }
-    .estado-circulo {
-      position: absolute;
-      right: 6px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 14px;
-      height: 14px;
-      border: 2px solid #005b96;
-      border-radius: 50%;
-      background-color: transparent;
-      transition: background-color 0.3s, border-color 0.3s;
-    }
-    .asignatura.aprobada .estado-circulo {
-      background-color: #2e8b57;
-      border-color: #2e8b57;
-    }
-    .asignatura.aprobada .estado-circulo::after {
-      content: "✔";
-      color: white;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -60%);
-      font-size: 12px;
-      font-weight: bold;
-    }
+
     @media (max-width: 900px) {
       .malla {
         grid-template-columns: repeat(2, 1fr);
@@ -100,128 +67,128 @@
        <!-- SEMESTRE 1 -->
     <div class="semestre">
       <h2>Semestre 1</h2>
-      <div class="asignatura" data-sigla="ICR010">Antropología Cristiana <div class="creditos">2 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN140">Introducción a la Ingeniería de Minas <div class="creditos">6 créditos</div></div>
-      <div class="asignatura" data-sigla="MAT115">Cálculo Diferencial <div class="creditos">6 créditos</div></div>
-      <div class="asignatura" data-sigla="MAT116">Álgebra <div class="creditos">6 créditos</div></div>
+      <div class="asignatura formacion-fundamental" data-sigla="ICR010">Antropología Cristiana <div class="creditos">2 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN140">Introducción a la Ingeniería de Minas <div class="creditos">6 créditos</div></div>
+      <div class="asignatura ciencias-basicas" data-sigla="MAT115">Cálculo Diferencial <div class="creditos">6 créditos</div></div>
+      <div class="asignatura ciencias-basicas" data-sigla="MAT116">Álgebra <div class="creditos">6 créditos</div></div>
     </div>
 
     <!-- SEMESTRE 2 -->
     <div class="semestre">
       <h2>Semestre 2</h2>
-      <div class="asignatura" data-sigla="EIQ150">Métodos Numéricos y Programación <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="MAT117">Cálculo Integral y Series <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="FIS131">Física General Mecánica 1 <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="ICR020">Ética Cristiana <div class="creditos">2 créditos</div></div>
-      <div class="asignatura" data-sigla="QUI222">Química General e Inorgánica <div class="creditos">6 créditos</div></div>
+      <div class="asignatura ingenieria" data-sigla="EIQ150">Métodos Numéricos y Programación <div class="creditos">4 créditos</div></div>
+      <div class="asignatura ciencias-basicas" data-sigla="MAT117">Cálculo Integral y Series <div class="creditos">4 créditos</div></div>
+      <div class="asignatura ciencias-basicas" data-sigla="FIS131">Física General Mecánica 1 <div class="creditos">4 créditos</div></div>
+      <div class="asignatura formacion-fundamental" data-sigla="ICR020">Ética Cristiana <div class="creditos">2 créditos</div></div>
+      <div class="asignatura ciencias-basicas" data-sigla="QUI222">Química General e Inorgánica <div class="creditos">6 créditos</div></div>
     </div>
 
     <!-- SEMESTRE 3 -->
     <div class="semestre">
       <h2>Semestre 3</h2>
-      <div class="asignatura" data-sigla="EIQ250">Dibujo de Ingeniería <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="MAT215">Cálculo en Varias Variables <div class="creditos">5 créditos</div></div>
-      <div class="asignatura" data-sigla="LCL227">Expresión Oral y Escrita <div class="creditos">2 créditos</div></div>
-      <div class="asignatura" data-sigla="FIS231">Física General Mecánica 2 <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="QUI220">Química Analítica <div class="creditos">5 créditos</div></div>
-      <div class="asignatura" data-sigla="FORM1">Formación Fundamental 1 <div class="creditos">2 créditos</div></div>
+      <div class="asignatura ingenieria" data-sigla="EIQ250">Dibujo de Ingeniería <div class="creditos">3 créditos</div></div>
+      <div class="asignatura ciencias-basicas" data-sigla="MAT215">Cálculo en Varias Variables <div class="creditos">5 créditos</div></div>
+      <div class="asignatura formacion-fundamental" data-sigla="LCL227">Expresión Oral y Escrita <div class="creditos">2 créditos</div></div>
+      <div class="asignatura ciencias-basicas" data-sigla="FIS231">Física General Mecánica 2 <div class="creditos">4 créditos</div></div>
+      <div class="asignatura ciencias-basicas" data-sigla="QUI220">Química Analítica <div class="creditos">5 créditos</div></div>
+      <div class="asignatura formacion-fundamental" data-sigla="FORM1">Formación Fundamental 1 <div class="creditos">2 créditos</div></div>
     </div>
 
     <!-- SEMESTRE 4 -->
     <div class="semestre">
       <h2>Semestre 4</h2>
-      <div class="asignatura" data-sigla="EIQ242">Elementos de Fisico química <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="MAT217">Ecuaciones Diferenciales <div class="creditos">6 créditos</div></div>
-      <div class="asignatura" data-sigla="EST224">Probabilidad e Inferencia Estadística <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="FIS331">Física General Electromagnetismo <div class="creditos">4 créditos</div></div>
+      <div class="asignatura ingenieria" data-sigla="EIQ242">Elementos de Fisico química <div class="creditos">4 créditos</div></div>
+      <div class="asignatura ciencias-basicas" data-sigla="MAT217">Ecuaciones Diferenciales <div class="creditos">6 créditos</div></div>
+      <div class="asignatura ciencias-basicas" data-sigla="EST224">Probabilidad e Inferencia Estadística <div class="creditos">4 créditos</div></div>
+      <div class="asignatura ciencias-basicas" data-sigla="FIS331">Física General Electromagnetismo <div class="creditos">4 créditos</div></div>
     </div>
 
     <!-- SEMESTRE 5 -->
     <div class="semestre">
       <h2>Semestre 5</h2>
-      <div class="asignatura" data-sigla="MIN310">Topografía Minera <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN320">Geología Minera <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN330">Operaciones y Procesos en Minería <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="EIQ342">Termodinámica General <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="EIE349">Sistema de Potencia en Instalaciones Mineras <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="ING9001">Inglés 1 <div class="creditos">2 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN310">Topografía Minera <div class="creditos">4 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN320">Geología Minera <div class="creditos">3 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN330">Operaciones y Procesos en Minería <div class="creditos">3 créditos</div></div>
+      <div class="asignatura ingenieria" data-sigla="EIQ342">Termodinámica General <div class="creditos">4 créditos</div></div>
+      <div class="asignatura ingenieria" data-sigla="EIE349">Sistema de Potencia en Instalaciones Mineras <div class="creditos">4 créditos</div></div>
+      <div class="asignatura formacion-fundamental" data-sigla="ING9001">Inglés 1 <div class="creditos">2 créditos</div></div>
 
     </div>
 
     <!-- SEMESTRE 6 -->
     <div class="semestre">
       <h2>Semestre 6</h2>
-      <div class="asignatura" data-sigla="MIN360">Petrología <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN388">Procesamiento de Minerales <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="EIQ356">Mecánica de Fluidos <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN375">Resistencia de Materiales <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="ING9002">Inglés 2 <div class="creditos">2 créditos</div></div> 
-      <div class="asignatura" data-sigla="MIN380">Perforación y Tronadura <div class="creditos">4 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN360">Petrología <div class="creditos">4 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN388">Procesamiento de Minerales <div class="creditos">3 créditos</div></div>
+      <div class="asignatura ingenieria" data-sigla="EIQ356">Mecánica de Fluidos <div class="creditos">4 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN375">Resistencia de Materiales <div class="creditos">3 créditos</div></div>
+      <div class="asignatura formacion-fundamental" data-sigla="ING9002">Inglés 2 <div class="creditos">2 créditos</div></div> 
+      <div class="asignatura especialidad" data-sigla="MIN380">Perforación y Tronadura <div class="creditos">4 créditos</div></div>
     </div>
 
     <!-- SEMESTRE 7 -->
     <div class="semestre">
       <h2>Semestre 7</h2>
-      <div class="asignatura" data-sigla="MIN410">Mecánica de Rocas <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN420">Geología Económica <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN430">Seguridad Minera <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="ING9003">Inglés 3 <div class="creditos">2 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN440">Ventilación <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN444">Carguío y Transporte <div class="creditos">2 créditos</div></div>
-      <div class="asignatura" data-sigla="ICA533">Análisis Económico <div class="creditos">4 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN410">Mecánica de Rocas <div class="creditos">3 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN420">Geología Económica <div class="creditos">3 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN430">Seguridad Minera <div class="creditos">3 créditos</div></div>
+      <div class="asignatura formacion-fundamental" data-sigla="ING9003">Inglés 3 <div class="creditos">2 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN440">Ventilación <div class="creditos">3 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN444">Carguío y Transporte <div class="creditos">2 créditos</div></div>
+      <div class="asignatura gestion" data-sigla="ICA533">Análisis Económico <div class="creditos">4 créditos</div></div>
     </div>
 
     <!-- SEMESTRE 8 -->
     <div class="semestre">
       <h2>Semestre 8</h2>
-      <div class="asignatura" data-sigla="MIN460">Métodos de Explotación Minera <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="ING9004">Inglés 4 <div class="creditos">2 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN470">Evaluación de Recursos y Reservas <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN480">Gestión Ambiental Minera <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN485">Cálculo de Procesos Mineros <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="EIQ542">Computación Aplicada <div class="creditos">4 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN460">Métodos de Explotación Minera <div class="creditos">4 créditos</div></div>
+      <div class="asignatura formacion-fundamental" data-sigla="ING9004">Inglés 4 <div class="creditos">2 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN470">Evaluación de Recursos y Reservas <div class="creditos">4 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN480">Gestión Ambiental Minera <div class="creditos">4 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN485">Cálculo de Procesos Mineros <div class="creditos">3 créditos</div></div>
+      <div class="asignatura ingenieria" data-sigla="EIQ542">Computación Aplicada <div class="creditos">4 créditos</div></div>
     </div>
 
     <!-- SEMESTRE 9 -->
     <div class="semestre">
       <h2>Semestre 9</h2>
-      <div class="asignatura" data-sigla="MIN510">Diseño de Minas a Cielo Abierto <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="OPT1">Optativo 1 <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="DER404">Legislación Laboral <div class="creditos">2 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN520">Derecho Minero <div class="creditos">2 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN540">Laboratorio de Procesamiento de Minerales <div class="creditos">2 créditos</div></div>
-      <div class="asignatura" data-sigla="EII604">Administración y Organización <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="EIQ571">Recursos Minerales, Minería y Mercado <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="FORM2">Formación Fundamental 2 <div class="creditos">2 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN510">Diseño de Minas a Cielo Abierto <div class="creditos">4 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="OPT1">Optativo 1 <div class="creditos">3 créditos</div></div>
+      <div class="asignatura gestion" data-sigla="DER404">Legislación Laboral <div class="creditos">2 créditos</div></div>
+      <div class="asignatura gestion" data-sigla="MIN520">Derecho Minero <div class="creditos">2 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN540">Laboratorio de Procesamiento de Minerales <div class="creditos">2 créditos</div></div>
+      <div class="asignatura gestion" data-sigla="EII604">Administración y Organización <div class="creditos">3 créditos</div></div>
+      <div class="asignatura ingenieria" data-sigla="EIQ571">Recursos Minerales, Minería y Mercado <div class="creditos">3 créditos</div></div>
+      <div class="asignatura formacion-fundamental" data-sigla="FORM2">Formación Fundamental 2 <div class="creditos">2 créditos</div></div>
     </div>
 
     <!-- SEMESTRE 10 -->
     <div class="semestre">
       <h2>Semestre 10</h2>
-      <div class="asignatura" data-sigla="MIN560">Diseño de Minas Subterráneas <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN590">Proyecto 1 <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN570">Sostenibilidad Minera <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="EIQ657">Ingeniería Económica <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="EII609">Investigación de Operaciones <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="OPT2">Optativo 2 <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="FORM3">Formación Fundamental 3 <div class="creditos">2 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN560">Diseño de Minas Subterráneas <div class="creditos">4 créditos</div></div>
+      <div class="asignatura integradoras" data-sigla="MIN590">Proyecto 1 <div class="creditos">3 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN570">Sostenibilidad Minera <div class="creditos">3 créditos</div></div>
+      <div class="asignatura gestion" data-sigla="EIQ657">Ingeniería Económica <div class="creditos">4 créditos</div></div>
+      <div class="asignatura gestion" data-sigla="EII609">Investigación de Operaciones <div class="creditos">3 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="OPT2">Optativo 2 <div class="creditos">3 créditos</div></div>
+      <div class="asignatura formacion-fundamental" data-sigla="FORM3">Formación Fundamental 3 <div class="creditos">2 créditos</div></div>
     </div>
 
     <!-- SEMESTRE 11 -->
     <div class="semestre">
       <h2>Semestre 11</h2>
-      <div class="asignatura" data-sigla="MIN640">Proyecto 2 <div class="creditos">6 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN620">Gestión de Proyectos Mineros <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="MIN630">Diseño y Evaluación de Proyectos <div class="creditos">4 créditos</div></div>
-      <div class="asignatura" data-sigla="OPT3">Optativo 3 <div class="creditos">3 créditos</div></div>    
+      <div class="asignatura integradoras" data-sigla="MIN640">Proyecto 2 <div class="creditos">6 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN620">Gestión de Proyectos Mineros <div class="creditos">3 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="MIN630">Diseño y Evaluación de Proyectos <div class="creditos">4 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="OPT3">Optativo 3 <div class="creditos">3 créditos</div></div>    
     </div>
 
     <!-- SEMESTRE 12 -->
     <div class="semestre">
       <h2>Semestre 12</h2>
-      <div class="asignatura" data-sigla="MIN680">Proyecto de Título <div class="creditos">12 créditos</div></div>
-      <div class="asignatura" data-sigla="OPT4">Optativo 4 <div class="creditos">3 créditos</div></div>
-      <div class="asignatura" data-sigla="PRM106">Practica Profesional <divc class="creditos">6 créditos</div></div>
+      <div class="asignatura integradoras" data-sigla="MIN680">Proyecto de Título <div class="creditos">12 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="OPT4">Optativo 4 <div class="creditos">3 créditos</div></div>
+      <div class="asignatura especialidad" data-sigla="PRM106">Practica Profesional <divc class="creditos">6 créditos</div></div>
 </div> <!-- cierre de .semestre 12 -->
 </div> <!-- cierre de .malla -->
   </div>

@@ -1,97 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Malla Ingeniería Civil de Minas</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f2f2f2;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #2e3a59;
-    }
-    .malla {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 10px;
-    }
-    .semestre {
-      background-color: #ffffff;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 10px;
-      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-    }
-    .semestre h2 {
-      font-size: 16px;
-      margin-top: 0;
-      color: #005b96;
-    }
-    .asignatura {
-      margin-bottom: 5px;
-      padding: 5px 5px 5px 24px; /* espacio para el circulo */
-      border-left: 4px solid #005b96;
-      background-color: #e9f1f7;
-      transition: all 0.3s;
-      opacity: 0.4;
-      position: relative;
-      cursor: pointer;
-      user-select: none;
-    }
-    .asignatura.no-click {
-      pointer-events: none;
-      cursor: default;
-    }
-    .asignatura.desbloqueada {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .asignatura.aprobada {
-      background-color: #b6e2b6 !important;
-      border-left-color: #2e8b57 !important;
-      opacity: 1;
-    }
-    .creditos {
-      font-size: 12px;
-      color: #555;
-    }
-    /* Círculo visual */
-    .estado-circulo {
-      position: absolute;
-      left: 6px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 14px;
-      height: 14px;
-      border: 2px solid #005b96;
-      border-radius: 50%;
-      background-color: transparent;
-      transition: background-color 0.3s, border-color 0.3s;
-    }
-    /* Cuando la asignatura está aprobada, círculo verde con check */
-    .asignatura.aprobada .estado-circulo {
-      background-color: #2e8b57;
-      border-color: #2e8b57;
-    }
-    .asignatura.aprobada .estado-circulo::after {
-      content: "✔";
-      color: white;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -60%);
-      font-size: 12px;
-      font-weight: bold;
-    }
-    @media (max-width: 900px) {
-      .malla {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+    .malla { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+    .semestre { background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .asignatura { position: relative; padding-left: 24px; margin-bottom: 8px; background: #e9f1f7; border-left: 4px solid #005b96; cursor: pointer; opacity: 0.5; transition: all 0.3s; }
+    .asignatura .estado-circulo { position: absolute; left: 5px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; border: 2px solid #005b96; border-radius: 50%; background: transparent; }
+    .asignatura.aprobada { background: #b6e2b6; border-left-color: #2e8b57; opacity: 1; }
+    .asignatura.aprobada .estado-circulo { background: #2e8b57; border-color: #2e8b57; }
+    .asignatura.aprobada .estado-circulo::after { content: '✔'; color: white; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%); font-size: 12px; }
+    .asignatura.desbloqueada { opacity: 1; }
+    .creditos { font-size: 12px; color: #555; }
   </style>
 </head>
 <body>
@@ -283,95 +206,64 @@
       "MIN590": 170
     };
     const asignaturas = document.querySelectorAll('.asignatura');
-    let aprobadas = JSON.parse(localStorage.getItem('aprobadas')) || [];
+   let aprobadas = JSON.parse(localStorage.getItem('aprobadas')) || [];
 
-    // Crear el círculo visual en cada asignatura
-    asignaturas.forEach(asig => {
-      if (!asig.querySelector('.estado-circulo')) {
-        const circulo = document.createElement('span');
-        circulo.classList.add('estado-circulo');
-        asig.insertBefore(circulo, asig.firstChild);
-      }
-    });
-
-    function actualizarEstado() {
-      let totalCreditos = 0;
-
-      asignaturas.forEach(asig => {
-        const sigla = asig.dataset.sigla;
-        if (aprobadas.includes(sigla)) {
-          const creditosText = asig.querySelector('.creditos')?.textContent || '';
-          const match = creditosText.match(/(\d+)/);
-          if (match) totalCreditos += parseInt(match[1]);
-        }
+    function renderMalla() {
+      const cont = document.getElementById('malla');
+      cont.innerHTML = '';
+      malla.forEach(({semestre, asignaturas}) => {
+        let col = `<div class='semestre'><h2>Semestre ${semestre}</h2>`;
+        asignaturas.forEach(a => {
+          const aprobada = aprobadas.includes(a.sigla) ? 'aprobada' : '';
+          col += `<div class='asignatura ${aprobada}' data-sigla='${a.sigla}'>
+            <span class='estado-circulo'></span>
+            ${a.nombre}
+            <div class='creditos'>${a.creditos} créditos</div>
+          </div>`;
+        });
+        col += '</div>';
+        cont.innerHTML += col;
       });
+      asignarEventos();
+      actualizarCreditos();
+    }
 
-      document.getElementById('creditos-totales').textContent = `Créditos aprobados: ${totalCreditos}`;
-
-      asignaturas.forEach(asig => {
-        const sigla = asig.dataset.sigla;
-        const prereqs = prerrequisitos[sigla] || [];
-        const requiereCreditos = creditosNecesarios[sigla] || 0;
-
-        const tienePrerrequisitosAprobados = prereqs.every(pr => aprobadas.includes(pr));
-        const cumpleCreditos = totalCreditos >= requiereCreditos;
-
-        const tieneRequisitos = prereqs.length > 0 || requiereCreditos > 0;
-        const puedeDesbloquear = (!tieneRequisitos) || (tienePrerrequisitosAprobados && cumpleCreditos);
-
-        asig.classList.remove('aprobada', 'desbloqueada', 'no-click');
-
-        if (aprobadas.includes(sigla)) {
-          asig.classList.add('aprobada', 'desbloqueada');
-          asig.removeAttribute('title');
-        } else if (puedeDesbloquear) {
-          asig.classList.add('desbloqueada');
-          asig.removeAttribute('title');
-        } else {
-          let tooltip = '';
-          if (prereqs.length > 0) {
-            const faltantes = prereqs.filter(p => !aprobadas.includes(p));
-            if (faltantes.length > 0) {
-              tooltip += `Faltan prerrequisitos: ${faltantes.join(', ')}. `;
-            }
+    function asignarEventos() {
+      document.querySelectorAll('.asignatura').forEach(asig => {
+        asig.addEventListener('click', () => {
+          const sigla = asig.dataset.sigla;
+          if (aprobadas.includes(sigla)) {
+            aprobadas = aprobadas.filter(s => s !== sigla);
+          } else {
+            aprobadas.push(sigla);
           }
-          if (requiereCreditos > 0 && totalCreditos < requiereCreditos) {
-            tooltip += `Requiere ${requiereCreditos} créditos aprobados.`;
-          }
-          asig.setAttribute('title', tooltip);
-          asig.classList.add('no-click');
-        }
+          localStorage.setItem('aprobadas', JSON.stringify(aprobadas));
+          renderMalla();
+        });
       });
     }
 
-    asignaturas.forEach(asig => {
-      asig.addEventListener('click', () => {
-        const sigla = asig.dataset.sigla;
-        const esDesbloqueada = asig.classList.contains('desbloqueada');
-
-        if (!esDesbloqueada) return;
-
-        if (aprobadas.includes(sigla)) {
-          aprobadas = aprobadas.filter(s => s !== sigla);
-        } else {
-          aprobadas.push(sigla);
+    function actualizarCreditos() {
+      let total = 0;
+      document.querySelectorAll('.asignatura').forEach(asig => {
+        if (asig.classList.contains('aprobada')) {
+          const creditosText = asig.querySelector('.creditos').textContent;
+          const match = creditosText.match(/(\d+)/);
+          if (match) total += parseInt(match[1]);
         }
-
-        localStorage.setItem('aprobadas', JSON.stringify(aprobadas));
-        actualizarEstado();
       });
-    });
+      document.getElementById('creditos-totales').textContent = `Créditos aprobados: ${total}`;
+    }
 
     document.getElementById('reset').addEventListener('click', () => {
-      if (confirm("¿Estás seguro de que quieres reiniciar tu progreso?")) {
+      if (confirm('¿Seguro que quieres reiniciar tu progreso?')) {
         localStorage.removeItem('aprobadas');
         aprobadas = [];
-        actualizarEstado();
+        renderMalla();
       }
     });
 
-    actualizarEstado();
+    renderMalla();
   </script>
 </body>
 </html>
-

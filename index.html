@@ -8,10 +8,10 @@
     body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
     .malla { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
     .semestre { background: #fff; border: 1px solid #ccc; border-radius: 8px; padding: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .asignatura { position: relative; margin-bottom: 8px; background: #e9f1f7; border-left: 4px solid #005b96; cursor: pointer; opacity: 0.5; padding: 5px 10px; transition: all 0.3s; border-radius: 4px; }
+    .asignatura { position: relative; margin-bottom: 8px; background: #e9f1f7; border-left: 4px solid #005b96; cursor: pointer; opacity: 1; padding: 5px 10px; transition: all 0.3s; border-radius: 4px; }
     .estado-circulo { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; border: 2px solid #005b96; border-radius: 50%; background: transparent; display: flex; align-items: center; justify-content: center; font-size: 12px; color: white; }
-    .asignatura.aprobada { background: #b6e2b6; border-left-color: #2e8b57; opacity: 1; }
-    .asignatura.aprobada .estado-circulo { background: #2e8b57; border-color: #2e8b57; }
+    .asignatura.aprobada { background: #b6e2b6; border-left-color: #2e8b57; }
+    .asignatura.aprobada .estado-circulo { background: #2e8b57; border-color: #2e8b57; content: '✔'; }
     .creditos { font-size: 12px; color: #555; }
   </style>
 </head>
@@ -204,7 +204,7 @@
       "MIN590": 170
     };
     const asignaturas = document.querySelectorAll('.asignatura');
- let aprobadas = JSON.parse(localStorage.getItem('aprobadas')) || [];
+    let aprobadas = JSON.parse(localStorage.getItem('aprobadas')) || [];
 
     function renderMalla() {
       const cont = document.getElementById('malla');
@@ -212,12 +212,11 @@
       malla.forEach(({semestre, asignaturas}) => {
         let col = `<div class='semestre'><h2>Semestre ${semestre}</h2>`;
         asignaturas.forEach(a => {
-          const aprobada = aprobadas.includes(a.sigla) ? 'aprobada' : '';
-          const checked = aprobada ? '✔' : '';
-          col += `<div class='asignatura ${aprobada}' data-sigla='${a.sigla}'>
+          const isAprobada = aprobadas.includes(a.sigla);
+          col += `<div class='asignatura ${isAprobada ? 'aprobada' : ''}' data-sigla='${a.sigla}'>
             ${a.nombre}
             <div class='creditos'>${a.creditos} créditos</div>
-            <div class='estado-circulo'>${checked}</div>
+            <div class='estado-circulo'>${isAprobada ? '✔' : ''}</div>
           </div>`;
         });
         col += '</div>';
@@ -244,12 +243,10 @@
 
     function actualizarCreditos() {
       let total = 0;
-      document.querySelectorAll('.asignatura').forEach(asig => {
-        if (asig.classList.contains('aprobada')) {
-          const creditosText = asig.querySelector('.creditos').textContent;
-          const match = creditosText.match(/(\d+)/);
-          if (match) total += parseInt(match[1]);
-        }
+      document.querySelectorAll('.asignatura.aprobada').forEach(asig => {
+        const creditosText = asig.querySelector('.creditos').textContent;
+        const match = creditosText.match(/(\d+)/);
+        if (match) total += parseInt(match[1]);
       });
       document.getElementById('creditos-totales').textContent = `Créditos aprobados: ${total}`;
     }
@@ -266,5 +263,6 @@
   </script>
 </body>
 </html>
+
 
 

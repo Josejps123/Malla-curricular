@@ -38,7 +38,6 @@
       background-color: #e9f1f7;
       transition: all 0.3s;
       opacity: 0.4;
-      cursor: pointer;
     }
     .asignatura.no-click {
       pointer-events: none;
@@ -265,25 +264,11 @@
       "ICA533": 90,
       "MIN590": 170
     };
-
-    const asignaturasHTML = document.querySelectorAll('.asignatura');
-    const malla = document.getElementById('malla');
-    const semestres = document.querySelectorAll('.semestre'); // Puedes volver a insertar si lo prefieres manual
     const asignaturas = document.querySelectorAll('.asignatura');
-
     let aprobadas = JSON.parse(localStorage.getItem('aprobadas')) || [];
-
-    asignaturas.forEach(asig => {
-      if (!asig.querySelector('.estado-circulo')) {
-        const circulo = document.createElement('span');
-        circulo.classList.add('estado-circulo');
-        asig.insertBefore(circulo, asig.firstChild);
-      }
-    });
 
     function actualizarEstado() {
       let totalCreditos = 0;
-
       asignaturas.forEach(asig => {
         const sigla = asig.dataset.sigla;
         if (aprobadas.includes(sigla)) {
@@ -334,15 +319,12 @@
       asig.addEventListener('click', () => {
         const sigla = asig.dataset.sigla;
         const esDesbloqueada = asig.classList.contains('desbloqueada');
-
         if (!esDesbloqueada) return;
-
         if (aprobadas.includes(sigla)) {
           aprobadas = aprobadas.filter(s => s !== sigla);
         } else {
           aprobadas.push(sigla);
         }
-
         localStorage.setItem('aprobadas', JSON.stringify(aprobadas));
         actualizarEstado();
       });
@@ -360,4 +342,5 @@
   </script>
 </body>
 </html>
+
 

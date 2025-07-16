@@ -53,6 +53,20 @@
     .creditos {
       font-size: 12px;
       color: #555;
+   .estado-circulo {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 2px solid #005b96;
+      border-radius: 50%;
+      margin-right: 6px;
+      vertical-align: middle;
+      background-color: transparent;
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+    .asignatura.aprobada .estado-circulo {
+      background-color: #2e8b57;
+      border-color: #2e8b57;
     }
     @media (max-width: 900px) {
       .malla {
@@ -252,6 +266,15 @@
 
     const asignaturas = document.querySelectorAll('.asignatura');
     let aprobadas = JSON.parse(localStorage.getItem('aprobadas')) || [];
+
+    // Agregar el círculo visual al inicio de cada asignatura
+    asignaturas.forEach(asig => {
+      if (!asig.querySelector('.estado-circulo')) {
+        const circulo = document.createElement('span');
+        circulo.classList.add('estado-circulo');
+        asig.insertBefore(circulo, asig.firstChild);
+      }
+    });
 
     function actualizarEstado() {
       let totalCreditos = 0;

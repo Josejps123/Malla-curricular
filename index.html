@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Malla Ingeniería Civil de Minas</title>
   <style>
     body {
@@ -33,14 +33,18 @@
     }
     .asignatura {
       margin-bottom: 5px;
-      padding: 5px;
+      padding: 5px 5px 5px 24px; /* espacio para el circulo */
       border-left: 4px solid #005b96;
       background-color: #e9f1f7;
       transition: all 0.3s;
       opacity: 0.4;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
     }
     .asignatura.no-click {
       pointer-events: none;
+      cursor: default;
     }
     .asignatura.desbloqueada {
       opacity: 1;
@@ -49,25 +53,39 @@
     .asignatura.aprobada {
       background-color: #b6e2b6 !important;
       border-left-color: #2e8b57 !important;
+      opacity: 1;
     }
     .creditos {
       font-size: 12px;
       color: #555;
     }
+    /* Círculo visual */
     .estado-circulo {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
+      position: absolute;
+      left: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
       border: 2px solid #005b96;
       border-radius: 50%;
-      margin-right: 6px;
-      vertical-align: middle;
       background-color: transparent;
       transition: background-color 0.3s, border-color 0.3s;
     }
+    /* Cuando la asignatura está aprobada, círculo verde con check */
     .asignatura.aprobada .estado-circulo {
       background-color: #2e8b57;
       border-color: #2e8b57;
+    }
+    .asignatura.aprobada .estado-circulo::after {
+      content: "✔";
+      color: white;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      font-size: 12px;
+      font-weight: bold;
     }
     @media (max-width: 900px) {
       .malla {
@@ -267,8 +285,18 @@
     const asignaturas = document.querySelectorAll('.asignatura');
     let aprobadas = JSON.parse(localStorage.getItem('aprobadas')) || [];
 
+    // Crear el círculo visual en cada asignatura
+    asignaturas.forEach(asig => {
+      if (!asig.querySelector('.estado-circulo')) {
+        const circulo = document.createElement('span');
+        circulo.classList.add('estado-circulo');
+        asig.insertBefore(circulo, asig.firstChild);
+      }
+    });
+
     function actualizarEstado() {
       let totalCreditos = 0;
+
       asignaturas.forEach(asig => {
         const sigla = asig.dataset.sigla;
         if (aprobadas.includes(sigla)) {
@@ -277,6 +305,7 @@
           if (match) totalCreditos += parseInt(match[1]);
         }
       });
+
       document.getElementById('creditos-totales').textContent = `Créditos aprobados: ${totalCreditos}`;
 
       asignaturas.forEach(asig => {
@@ -319,12 +348,15 @@
       asig.addEventListener('click', () => {
         const sigla = asig.dataset.sigla;
         const esDesbloqueada = asig.classList.contains('desbloqueada');
+
         if (!esDesbloqueada) return;
+
         if (aprobadas.includes(sigla)) {
           aprobadas = aprobadas.filter(s => s !== sigla);
         } else {
           aprobadas.push(sigla);
         }
+
         localStorage.setItem('aprobadas', JSON.stringify(aprobadas));
         actualizarEstado();
       });
@@ -342,5 +374,4 @@
   </script>
 </body>
 </html>
-
 
